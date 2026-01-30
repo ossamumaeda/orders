@@ -1,13 +1,15 @@
 package com.delivery.api.domain.customer;
 
+import java.util.HashSet;
 import java.util.UUID;
+
+import com.delivery.api.domain.order.Order;
+import com.delivery.api.domain.orderItem.OrderItem;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -31,14 +33,18 @@ public class Customer {
 
     private String email;
 
-    @OneToMany(
-        mappedBy = "customer",
-        cascade = CascadeType.ALL,
-        orphanRemoval = true
-    )
-    private Customer customer;
+    // @OneToMany(
+    //     mappedBy = "customer",
+    //     cascade = CascadeType.ALL,
+    //     orphanRemoval = true
+    // )
+    // private HashSet<Order> order;
 
-    
+    public Customer(String name,String email){
+        this.name = name;
+        this.email = email;
+    }
+
     @Override
     public boolean equals(Object o) {
 
