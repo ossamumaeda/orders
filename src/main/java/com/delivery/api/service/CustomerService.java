@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 
 import com.delivery.api.domain.customer.Customer;
 import com.delivery.api.repositories.CustomerRepository;
+import com.delivery.api.service.dto.CustomerCreateRequest;
+import com.delivery.api.service.dto.CustomerCreateResponse;
 
 @Service
 public class CustomerService {
@@ -16,15 +18,19 @@ public class CustomerService {
         this.customerRepository = customerRepository;
     }
 
-    public ResponseEntity<Customer> createCustomer(CustomerCreateRequest customerCreateRequest){
+    public ResponseEntity<CustomerCreateResponse> createCustomer(CustomerCreateRequest customerCreateRequest){
+        
         if(customerCreateRequest.email() == null || customerCreateRequest.name() == null){
             return ResponseEntity.badRequest().body(null);
         }
+
         Customer customer = new Customer(customerCreateRequest.name(),customerCreateRequest.email());
         
-        this.customerRepository.save(customer);
+        customer = this.customerRepository.save(customer);
 
-        return ResponseEntity.ok().body(customer);
+        CustomerCreateResponse response = new CustomerCreateResponse(customer.getEmail(), customer.getName(), customer.getId());
+
+        return ResponseEntity.ok().body(response);
     }
 
 }

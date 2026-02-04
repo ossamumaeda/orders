@@ -1,0 +1,2 @@
+ALTER TABLE product
+ADD code VARCHAR(20) DEFAULT '';

@@ -1,4 +1,4 @@
-package com.delivery.api.service;
+package com.delivery.api.service.dto;
 
 public record CustomerCreateRequest(
 

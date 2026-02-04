@@ -2,7 +2,6 @@ package com.delivery.api.domain.product;
 
 import java.util.UUID;
 
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -30,6 +29,8 @@ public class Product {
 
     private Integer stockQuantity;
 
+    private String code;
+
     @Override
     public boolean equals(Object o) {
 
@@ -43,14 +44,14 @@ public class Product {
 
         Product product = (Product) o;
 
-        return this.name.equals(product.name);
+        return this.code.equals(product.code);
 
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 31 * hash + (name == null ? 0 : name.hashCode());
+        hash = 31 * hash + (code == null ? 0 : code.hashCode());
         return hash;
     }
 

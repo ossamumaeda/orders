@@ -11,5 +11,6 @@ public class ApiApplication {
 	}
 
 	//mvn flyway:migrate
+	// mvn flyway:migrate   -Dflyway.url=jdbc:postgresql://localhost:5432/orders   -Dflyway.user=admin   -Dflyway.password=adminpassword
 
 }

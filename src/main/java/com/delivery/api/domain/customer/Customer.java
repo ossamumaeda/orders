@@ -1,16 +1,10 @@
 package com.delivery.api.domain.customer;
 
-import java.util.HashSet;
 import java.util.UUID;
 
-import com.delivery.api.domain.order.Order;
-import com.delivery.api.domain.orderItem.OrderItem;
-
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
