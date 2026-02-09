@@ -34,9 +34,9 @@ public class Order {
     @GeneratedValue // Gera um valor automatico
     private UUID id;
 
-    private String status;
+    private String status_order;
 
-    private Instant createdAt;
+    private Instant created_at;
 
     // Precisa se relacionar com 1 customer
     @ManyToOne
@@ -52,8 +52,8 @@ public class Order {
     private HashSet<OrderItem> items;
 
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "payment_id", referencedColumnName = "id")
-    private Payment payment;
+    // @OneToOne(cascade = CascadeType.ALL)
+    // @JoinColumn(name = "payment_id", referencedColumnName = "id")
+    // private Payment payment;
 
 }

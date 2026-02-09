@@ -20,7 +20,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "order_item")
+@Table(name = "orders_item")
 @Entity
 public class OrderItem {
     

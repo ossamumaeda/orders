@@ -1,9 +1,9 @@
 Required Features (learning-driven)
 🔹 Phase 1 — Core CRUD (but correctly)
 
-. Create customer
+. Create customer - OK
 
-. Create product
+. Create product - OK
 
 . Create order with items
 
