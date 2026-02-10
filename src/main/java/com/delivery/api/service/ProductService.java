@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 
 import com.delivery.api.domain.product.Product;
 import com.delivery.api.repositories.ProductRepository;
-import com.delivery.api.service.dto.ProductCreateRequest;
-import com.delivery.api.service.dto.ProductCreateResponse;
+import com.delivery.api.usecase.dto.ProductCreateRequest;
+import com.delivery.api.usecase.dto.ProductCreateResponse;
 
 @Service
 public class ProductService {
@@ -18,13 +18,13 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public ResponseEntity<ProductCreateResponse> createProduct(ProductCreateRequest productCreateRequest ){
+    public Product createProduct(ProductCreateRequest productCreateRequest ){
 
         if(productCreateRequest.name() == null 
             || productCreateRequest.price() == null 
             || productCreateRequest.code() == null
         ){
-            return ResponseEntity.badRequest().body(null);
+            return null;
         }
 
         Product product = new Product();
@@ -41,9 +41,13 @@ public class ProductService {
 
         product = this.productRepository.save(product);
 
-        ProductCreateResponse productCreateResponse = new ProductCreateResponse(product.getName(), product.getPrice(), product.getStockQuantity(),product.getCode());
-        return ResponseEntity.ok(productCreateResponse);
+        return product;
 
+    }
+
+    public Product getByCode(String code){
+        Product product = this.productRepository.findByCode(code).orElseThrow(); // Como tratar isso e nao dar erro na funcao toda
+        return product;
     }
 
 }

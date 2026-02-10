@@ -1,5 +1,4 @@
-package com.delivery.api.service.dto;
-
+package com.delivery.api.usecase.dto;
 import java.util.List;
 import java.util.UUID;
 

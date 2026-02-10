@@ -7,9 +7,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.delivery.api.domain.customer.Customer;
 import com.delivery.api.service.CustomerService;
-import com.delivery.api.service.dto.CustomerCreateRequest;
-import com.delivery.api.service.dto.CustomerCreateResponse;
+import com.delivery.api.usecase.dto.CustomerCreateRequest;
+import com.delivery.api.usecase.dto.CustomerCreateResponse;
 
 
 @RestController
@@ -25,7 +26,10 @@ public class CustomerController {
     @PostMapping("/create-customer")
     public ResponseEntity<CustomerCreateResponse> postMethodName(@RequestBody CustomerCreateRequest customerCreateRequest) {
         
-        return this.customerService.createCustomer(customerCreateRequest);
+        Customer customer = this.customerService.createCustomer(customerCreateRequest);
+        CustomerCreateResponse response = new CustomerCreateResponse(customer.getEmail(), customer.getName(),
+                customer.getId());
+        return ResponseEntity.ok(response);
         
     }
     
