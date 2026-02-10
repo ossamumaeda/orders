@@ -44,7 +44,9 @@ public class ProductService {
     }
 
     public Product getByCode(String code){
-        Product product = this.productRepository.findByCode(code).orElseThrow(); // Como tratar isso e nao dar erro na funcao toda
+        Product product = this.productRepository.findByCode(code).orElseThrow(
+            RuntimeException::new
+        ); 
         return product;
     }
 

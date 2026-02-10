@@ -3,6 +3,7 @@ package com.delivery.api.service;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +24,7 @@ public class OrderItemService {
     public List<OrderItem> createOrderItem(List<OrderItemCreateProduct> order_items, Order order){
 
         if(order_items.size() <= 0){
-            return null;
+            throw new RuntimeException("Lista de items vazia");
         }
 
         List<OrderItem> items = new ArrayList<OrderItem>();

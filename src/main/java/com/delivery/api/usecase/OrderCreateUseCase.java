@@ -20,6 +20,8 @@ import com.delivery.api.usecase.dto.OrderItemCreateProduct;
 import com.delivery.api.usecase.dto.OrderItemCreateRequest;
 import com.delivery.api.usecase.dto.OrderItemCreateResponse;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class OrderCreateUseCase {
 
@@ -39,6 +41,7 @@ public class OrderCreateUseCase {
         this.orderItemService = orderItemService;
     }
 
+    @Transactional
     public OrderCreateResponse execute(OrderCreateRequest orderCreateRequest) {
 
         if (orderCreateRequest.customer_id() == null) {
@@ -52,7 +55,7 @@ public class OrderCreateUseCase {
         Customer customer = this.customerService.findCustomerByCode(orderCreateRequest.customer_id());
         // Create order
         Order order = this.orderService.CreateOrder(customer);
-
+        System.out.println(order);
         List<OrderItemCreateProduct> items = new ArrayList<OrderItemCreateProduct>();
         for(OrderItemCreateRequest item : orderCreateRequest.order_items()){
             Product product = this.productService.getByCode(item.code());
