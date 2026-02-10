@@ -7,8 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.delivery.api.domain.product.Product;
-import com.delivery.api.service.ProductService;
+import com.delivery.api.usecase.ProductCreateUseCase;
 import com.delivery.api.usecase.dto.ProductCreateRequest;
 import com.delivery.api.usecase.dto.ProductCreateResponse;
 
@@ -16,17 +15,17 @@ import com.delivery.api.usecase.dto.ProductCreateResponse;
 @RequestMapping(value = "/product")
 public class ProductController {
     
-    private final ProductService productService;
+    private final ProductCreateUseCase productCreateUseCase;
 
-    public ProductController(@Autowired ProductService productService){
-        this.productService = productService;
+    public ProductController(@Autowired ProductCreateUseCase productCreateUseCase){
+        this.productCreateUseCase = productCreateUseCase;
     }
 
     @PostMapping("/create-product")
     public ResponseEntity<ProductCreateResponse> postMethodName(@RequestBody ProductCreateRequest productCreateRequest) {
         
-        Product product = this.productService.createProduct(productCreateRequest);
-        ProductCreateResponse response = new ProductCreateResponse(product.getName(), product.getPrice(), product.getStockQuantity(),product.getCode());
+        ProductCreateResponse response = this.productCreateUseCase.execute(productCreateRequest);
+        
         return ResponseEntity.ok(response);
         
     }

@@ -1,13 +1,11 @@
 package com.delivery.api.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.delivery.api.domain.product.Product;
 import com.delivery.api.repositories.ProductRepository;
 import com.delivery.api.usecase.dto.ProductCreateRequest;
-import com.delivery.api.usecase.dto.ProductCreateResponse;
 
 @Service
 public class ProductService {

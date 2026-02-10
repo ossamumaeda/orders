@@ -7,8 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.delivery.api.domain.customer.Customer;
-import com.delivery.api.service.CustomerService;
+import com.delivery.api.usecase.CustomerCreateUseCase;
 import com.delivery.api.usecase.dto.CustomerCreateRequest;
 import com.delivery.api.usecase.dto.CustomerCreateResponse;
 
@@ -17,18 +16,17 @@ import com.delivery.api.usecase.dto.CustomerCreateResponse;
 @RequestMapping(value = "/customer")
 public class CustomerController {
     
-    private final CustomerService customerService;
+    private final CustomerCreateUseCase customerCreateUseCase;
 
-    public CustomerController(@Autowired CustomerService customerService){
-        this.customerService = customerService;
+    public CustomerController(@Autowired CustomerCreateUseCase customerCreateUseCase){
+        this.customerCreateUseCase = customerCreateUseCase;
     }
 
     @PostMapping("/create-customer")
     public ResponseEntity<CustomerCreateResponse> postMethodName(@RequestBody CustomerCreateRequest customerCreateRequest) {
         
-        Customer customer = this.customerService.createCustomer(customerCreateRequest);
-        CustomerCreateResponse response = new CustomerCreateResponse(customer.getEmail(), customer.getName(),
-                customer.getId());
+        CustomerCreateResponse response = this.customerCreateUseCase.execute(customerCreateRequest);
+
         return ResponseEntity.ok(response);
         
     }

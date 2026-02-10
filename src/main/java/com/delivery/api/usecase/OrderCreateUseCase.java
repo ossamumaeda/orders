@@ -21,13 +21,13 @@ import com.delivery.api.usecase.dto.OrderItemCreateRequest;
 import com.delivery.api.usecase.dto.OrderItemCreateResponse;
 
 @Service
-public class CreateOrderUseCase {
+public class OrderCreateUseCase {
 
     private final OrderService orderService;
     private final CustomerService customerService;
     private final ProductService productService;
     private final OrderItemService orderItemService;
-    public CreateOrderUseCase(
+    public OrderCreateUseCase(
             @Autowired OrderService orderService,
             @Autowired CustomerService customerService,
             @Autowired ProductService productService,
