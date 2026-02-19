@@ -7,24 +7,25 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.delivery.api.service.OrderService;
-import com.delivery.api.service.dto.OrderCreateRequest;
+import com.delivery.api.usecase.OrderCreateUseCase;
+import com.delivery.api.usecase.dto.OrderCreateRequest;
+import com.delivery.api.usecase.dto.OrderCreateResponse;
 
 @RestController
 @RequestMapping(value = "/order")
 public class OrderController {
 
-    private final OrderService orderService;
+    private final OrderCreateUseCase OrderCreateUseCase;
 
-    public OrderController(@Autowired OrderService orderService){
-        this.orderService = orderService;
+    public OrderController(@Autowired OrderCreateUseCase createOrderUseCase){
+        this.OrderCreateUseCase = createOrderUseCase;
     }
 
     @PostMapping("/create-order")
-    public ResponseEntity<Object> postMethodName(@RequestBody OrderCreateRequest orderCreateRequest) {
+    public ResponseEntity<OrderCreateResponse> postMethodName(@RequestBody OrderCreateRequest orderCreateRequest) {
         
-        return this.orderService.createOrderWithItems(orderCreateRequest);
-        
+        OrderCreateResponse response = this.OrderCreateUseCase.execute(orderCreateRequest);
+        return ResponseEntity.ok(response);
     }
 
 }

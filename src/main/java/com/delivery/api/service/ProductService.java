@@ -1,13 +1,11 @@
 package com.delivery.api.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.delivery.api.domain.product.Product;
 import com.delivery.api.repositories.ProductRepository;
-import com.delivery.api.service.dto.ProductCreateRequest;
-import com.delivery.api.service.dto.ProductCreateResponse;
+import com.delivery.api.usecase.dto.ProductCreateRequest;
 
 @Service
 public class ProductService {
@@ -18,13 +16,13 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public ResponseEntity<ProductCreateResponse> createProduct(ProductCreateRequest productCreateRequest ){
+    public Product createProduct(ProductCreateRequest productCreateRequest ){
 
         if(productCreateRequest.name() == null 
             || productCreateRequest.price() == null 
             || productCreateRequest.code() == null
         ){
-            return ResponseEntity.badRequest().body(null);
+            return null;
         }
 
         Product product = new Product();
@@ -41,8 +39,28 @@ public class ProductService {
 
         product = this.productRepository.save(product);
 
-        ProductCreateResponse productCreateResponse = new ProductCreateResponse(product.getName(), product.getPrice(), product.getStockQuantity(),product.getCode());
-        return ResponseEntity.ok(productCreateResponse);
+        return product;
+
+    }
+
+    public Product getByCode(String code){
+        Product product = this.productRepository.findByCode(code).orElseThrow(
+            RuntimeException::new
+        ); 
+        return product;
+    }
+
+    public Product decreaseQuantity(Product product, Integer quantity){
+        
+        Integer stock = product.getStockQuantity();
+        if(stock < quantity){
+            throw new RuntimeException("Out of stock");
+        }
+
+        product.setStockQuantity(stock - quantity);
+        this.productRepository.save(product);
+
+        return product;
 
     }
 

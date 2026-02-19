@@ -1,9 +1,8 @@
-package com.delivery.api.service.dto;
+package com.delivery.api.usecase.dto;
 
 public record OrderItemCreateRequest(
         String code,
         Integer quantity
-
 ) {
 
 }
