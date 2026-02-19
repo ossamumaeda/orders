@@ -29,6 +29,7 @@ public class OrderCreateUseCase {
     private final CustomerService customerService;
     private final ProductService productService;
     private final OrderItemService orderItemService;
+
     public OrderCreateUseCase(
             @Autowired OrderService orderService,
             @Autowired CustomerService customerService,
@@ -55,10 +56,17 @@ public class OrderCreateUseCase {
         Customer customer = this.customerService.findCustomerByCode(orderCreateRequest.customer_id());
         // Create order
         Order order = this.orderService.CreateOrder(customer);
-        System.out.println(order);
+
         List<OrderItemCreateProduct> items = new ArrayList<OrderItemCreateProduct>();
+
         for(OrderItemCreateRequest item : orderCreateRequest.order_items()){
             Product product = this.productService.getByCode(item.code());
+
+            if(item.quantity() > product.getStockQuantity()){
+                
+                throw new RuntimeException("Out of stock");
+            }
+            this.productService.decreaseQuantity(product,item.quantity());
             items.add(new OrderItemCreateProduct(product,item.quantity()));
         }
 
@@ -79,7 +87,8 @@ public class OrderCreateUseCase {
             customer.getEmail(),
             itemsResponse
         );
-        // Aqui sim eu deveria colocar um DTO
+
+
         return orderCreateResponse;
 
     }

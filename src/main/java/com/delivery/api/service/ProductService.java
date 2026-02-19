@@ -50,4 +50,18 @@ public class ProductService {
         return product;
     }
 
+    public Product decreaseQuantity(Product product, Integer quantity){
+        
+        Integer stock = product.getStockQuantity();
+        if(stock < quantity){
+            throw new RuntimeException("Out of stock");
+        }
+
+        product.setStockQuantity(stock - quantity);
+        this.productRepository.save(product);
+
+        return product;
+
+    }
+
 }

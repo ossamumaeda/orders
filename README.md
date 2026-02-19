@@ -5,11 +5,11 @@ Required Features (learning-driven)
 
 . Create product - OK
 
-. Create order with items
+. Create order with items - OK
 
-. Validate stock
+. Validate stock - OK
 
-. Decrease inventory
+. Decrease inventory - OK
 
 👉 Learn:
 
