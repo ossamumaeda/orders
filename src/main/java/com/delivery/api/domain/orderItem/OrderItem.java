@@ -4,8 +4,10 @@ import java.util.UUID;
 
 import com.delivery.api.domain.order.Order;
 import com.delivery.api.domain.product.Product;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -37,8 +39,9 @@ public class OrderItem {
     @JoinColumn(name = "product_id")
     private Product product;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
+    // @JsonBackReference
     private Order order;
 
     @Override

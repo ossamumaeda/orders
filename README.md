@@ -21,11 +21,11 @@ Required Features (learning-driven)
 
 🔹 Phase 2 — Business rules
 
-. Prevent duplicate products in same order
+. Prevent duplicate products in same order - OK
+ 
+. Prevent order without items - OK
 
-. Prevent order without items
-
-. Prevent negative stock
+. Prevent negative stock - OK
 
 . Order status lifecycle
 
@@ -39,7 +39,7 @@ Required Features (learning-driven)
 
 🔹 Phase 3 — Performance traps (intentional pain)
 
-. List orders with customer + items
+. List orders with customer + items - OK
 
 . Observe N+1 problem
 

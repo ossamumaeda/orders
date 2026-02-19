@@ -55,7 +55,7 @@ public class OrderCreateUseCase {
 
         Customer customer = this.customerService.findCustomerByCode(orderCreateRequest.customer_id());
         // Create order
-        Order order = this.orderService.CreateOrder(customer);
+        Order order = this.orderService.createOrder(customer);
 
         List<OrderItemCreateProduct> items = new ArrayList<OrderItemCreateProduct>();
 
@@ -66,11 +66,19 @@ public class OrderCreateUseCase {
                 
                 throw new RuntimeException("Out of stock");
             }
+
             this.productService.decreaseQuantity(product,item.quantity());
-            items.add(new OrderItemCreateProduct(product,item.quantity()));
+            OrderItemCreateProduct newOrderItem = new OrderItemCreateProduct(product,item.quantity());
+
+            if(items.contains(newOrderItem)){
+                throw new RuntimeException("Produto ja incluido");
+            }
+
+            items.add(newOrderItem);
         }
 
-        List<OrderItem> orderItems = this.orderItemService.createOrderItem(items,order);
+        List<OrderItem> orderItems = this.orderItemService.createOrderItems(items,order);
+
         List<OrderItemCreateResponse> itemsResponse = new ArrayList<OrderItemCreateResponse>();
         for(OrderItem o : orderItems){
             itemsResponse.add(new OrderItemCreateResponse(

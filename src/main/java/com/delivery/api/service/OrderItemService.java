@@ -21,7 +21,7 @@ public class OrderItemService {
         this.orderItemRepository = orderItemRepository;
     }
 
-    public List<OrderItem> createOrderItem(List<OrderItemCreateProduct> order_items, Order order){
+    public List<OrderItem> createOrderItems(List<OrderItemCreateProduct> order_items, Order order){
 
         if(order_items.size() <= 0){
             throw new RuntimeException("Lista de items vazia");

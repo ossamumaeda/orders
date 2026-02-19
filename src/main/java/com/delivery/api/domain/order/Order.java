@@ -2,16 +2,22 @@ package com.delivery.api.domain.order;
 
 import java.time.Instant;
 import java.util.HashSet;
+import java.util.List;
 import java.util.UUID;
 
 import com.delivery.api.domain.customer.Customer;
 import com.delivery.api.domain.orderItem.OrderItem;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedAttributeNode;
+import jakarta.persistence.NamedEntityGraph;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -25,6 +31,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @Table(name = "orders")
 @Entity
+@NamedEntityGraph(
+    name = "graph.OrderItem",
+    attributeNodes = @NamedAttributeNode("items")
+)
 public class Order {
 
     @Id
@@ -43,10 +53,10 @@ public class Order {
     // @OneToMany(mappedBy = "order")
     @OneToMany( 
         mappedBy = "order",
-        cascade = CascadeType.ALL,
-        orphanRemoval = true
+        fetch = FetchType.LAZY
     )
-    private HashSet<OrderItem> items;
+    // @JsonManagedReference
+    private List<OrderItem> items;
 
 
     // @OneToOne(cascade = CascadeType.ALL)
