@@ -41,7 +41,9 @@ Required Features (learning-driven)
 
 . List orders with customer + items - OK
 
-. Observe N+1 problem
+. List orders by customers - OK
+
+. Observe N+1 problem - OK
 
 . Fix using:
 
