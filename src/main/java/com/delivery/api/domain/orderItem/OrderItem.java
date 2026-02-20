@@ -4,7 +4,6 @@ import java.util.UUID;
 
 import com.delivery.api.domain.order.Order;
 import com.delivery.api.domain.product.Product;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -35,7 +34,7 @@ public class OrderItem {
     private Long price;
 
     // Precisa se relacionar com 1 customer
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private Product product;
 

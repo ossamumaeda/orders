@@ -17,8 +17,13 @@ public interface OrderRepository extends JpaRepository<Order, UUID>{
     @Query("SELECT o FROM Order o")
     Order getReferenceById(UUID id);
 
+    // Solve N+1 using entity graph
     @EntityGraph(attributePaths = {"items","customer"})
     @Query("SELECT o FROM Order o")
     List<Order> getRefenceByCustomer(Customer customer);
+
+    // Solve N+1 using JOIN FETCH
+    // @Query("SELECT o FROM Order o JOIN FETCH o.customer JOIN FETCH o.items")
+    // List<Order> getRefenceByCustomer(Customer customer);
 
 }
