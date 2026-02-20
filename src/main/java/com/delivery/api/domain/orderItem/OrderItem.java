@@ -6,6 +6,7 @@ import com.delivery.api.domain.order.Order;
 import com.delivery.api.domain.product.Product;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -33,12 +34,13 @@ public class OrderItem {
     private Long price;
 
     // Precisa se relacionar com 1 customer
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private Product product;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
+    // @JsonBackReference
     private Order order;
 
     @Override

@@ -1,6 +1,9 @@
 package com.delivery.api.service;
 
 import java.time.Instant;
+import java.util.List;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +20,7 @@ public class OrderService {
         this.orderRepository = orderRepository;
     }
 
-    public Order CreateOrder(Customer customer) {
+    public Order createOrder(Customer customer) {
 
         if (customer == null) {
             return null;
@@ -32,5 +35,28 @@ public class OrderService {
 
         return order;
     }
+ 
+    public Order getOrder(UUID order_id){
+
+        if(order_id == null){
+            throw new RuntimeException("No id was informed");
+        }
+
+        Order order = this.orderRepository.getReferenceById(order_id);
+        return order;
+    }
+
+    public List<Order> getOrderByCustomer(Customer customer){
+
+        if(customer == null){
+            throw new RuntimeException("No customer id was informed");
+        }
+
+        List<Order> orders = this.orderRepository.getRefenceByCustomer(customer);
+        
+        return orders;
+
+    }
+
 
 }
