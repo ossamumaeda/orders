@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.delivery.api.domain.product.Product;
+import com.delivery.api.exceptions.runTimeExceptions.MissingProductFieldsException;
 import com.delivery.api.service.ProductService;
 import com.delivery.api.usecase.dto.ProductCreateRequest;
 import com.delivery.api.usecase.dto.ProductCreateResponse;
@@ -20,9 +21,11 @@ public class ProductCreateUseCase {
     public ProductCreateResponse execute(ProductCreateRequest productCreateRequest){
         
         Product product = this.productService.createProduct(productCreateRequest);
+
         if(product == null) {
-            return null;
+            throw new MissingProductFieldsException();
         }
+
         ProductCreateResponse response = new ProductCreateResponse(product.getName(), product.getPrice(), product.getStockQuantity(),product.getCode());
 
         return response;

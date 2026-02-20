@@ -10,6 +10,9 @@ import com.delivery.api.domain.customer.Customer;
 import com.delivery.api.domain.order.Order;
 import com.delivery.api.domain.orderItem.OrderItem;
 import com.delivery.api.domain.product.Product;
+import com.delivery.api.exceptions.runTimeExceptions.DoubleProductException;
+import com.delivery.api.exceptions.runTimeExceptions.NoCustumerException;
+import com.delivery.api.exceptions.runTimeExceptions.OutOfStockException;
 import com.delivery.api.service.CustomerService;
 import com.delivery.api.service.OrderItemService;
 import com.delivery.api.service.OrderService;
@@ -46,7 +49,7 @@ public class OrderCreateUseCase {
     public OrderCreateResponse execute(OrderCreateRequest orderCreateRequest) {
 
         if (orderCreateRequest.customer_id() == null) {
-            return null;
+            throw new NoCustumerException();
         }
 
         if(orderCreateRequest.order_items().size() <= 0){
@@ -64,14 +67,14 @@ public class OrderCreateUseCase {
 
             if(item.quantity() > product.getStockQuantity()){
                 
-                throw new RuntimeException("Out of stock");
+                throw new OutOfStockException();
             }
 
             this.productService.decreaseQuantity(product,item.quantity());
             OrderItemCreateProduct newOrderItem = new OrderItemCreateProduct(product,item.quantity());
 
             if(items.contains(newOrderItem)){
-                throw new RuntimeException("Produto ja incluido");
+                throw new DoubleProductException();
             }
 
             items.add(newOrderItem);

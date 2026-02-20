@@ -1,11 +1,13 @@
 package com.delivery.api.service;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.delivery.api.domain.customer.Customer;
+import com.delivery.api.exceptions.runTimeExceptions.NoCustumerException;
 import com.delivery.api.repositories.CustomerRepository;
 import com.delivery.api.usecase.dto.CustomerCreateRequest;
 
@@ -32,16 +34,18 @@ public class CustomerService {
     }
 
     public Customer findCustomerByCode(UUID customer_id) {
+
         if(customer_id == null){
             return null;
         }
 
-        Customer customer = this.customerRepository.getReferenceById(customer_id);
-        if (customer == null) {
+        Optional<Customer> customer = this.customerRepository.findById(customer_id);
+        if (customer.isPresent() == false) {
             return null;
         }
 
-        return customer;
+        return customer.get();
+
     }
 
 }

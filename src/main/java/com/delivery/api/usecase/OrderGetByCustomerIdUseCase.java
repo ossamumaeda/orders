@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.delivery.api.domain.customer.Customer;
 import com.delivery.api.domain.order.Order;
 import com.delivery.api.domain.orderItem.OrderItem;
+import com.delivery.api.exceptions.runTimeExceptions.NoCustumerException;
 import com.delivery.api.service.CustomerService;
 import com.delivery.api.service.OrderService;
 import com.delivery.api.usecase.dto.OrderGetByCustomerIdRequest;
@@ -35,9 +36,9 @@ public class OrderGetByCustomerIdUseCase{
         }
 
         Customer customer = this.customerService.findCustomerByCode(orderGetByCustomerIdRequest.customer_id());
-
+        
         if(customer == null){
-            return null;
+            throw new NoCustumerException();
         }
 
         List<Order> orders = this.orderService.getOrderByCustomer(customer);
