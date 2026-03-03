@@ -61,9 +61,9 @@ Required Features (learning-driven)
 
 🔹 Phase 4 — Error handling & robustness
 
-. Global exception handling
-. Meaningful HTTP errors
-. Validation errors
+. Global exception handling - OK
+. Meaningful HTTP errors - OK
+. Validation errors - ok
 
 👉 Learn:
 

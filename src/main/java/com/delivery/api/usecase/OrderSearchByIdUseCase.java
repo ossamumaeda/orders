@@ -12,6 +12,7 @@ import com.delivery.api.usecase.dto.OrderGetByIdRequest;
 import com.delivery.api.usecase.dto.OrderGetByIdResponse;
 import com.delivery.api.domain.order.Order;
 import com.delivery.api.domain.orderItem.OrderItem;
+import com.delivery.api.exceptions.runTimeExceptions.NoOrderException;
 
 @Service
 public class OrderSearchByIdUseCase {
@@ -26,10 +27,13 @@ public class OrderSearchByIdUseCase {
     public OrderGetByIdResponse execute(OrderGetByIdRequest orderGetByIdRequest) {
 
         if (orderGetByIdRequest.order_id() == null) {
-            throw new RuntimeException("Id was no informed");
+            throw new NoOrderException();
         }
 
         Order order = this.orderService.getOrder(orderGetByIdRequest.order_id());
+        if(order == null){
+            throw new NoOrderException();
+        }
 
         List<OrderGetByIdItem> items = new ArrayList<OrderGetByIdItem>();
         for (OrderItem item : order.getItems()) {

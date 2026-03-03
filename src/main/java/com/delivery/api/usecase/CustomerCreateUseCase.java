@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.delivery.api.domain.customer.Customer;
+import com.delivery.api.exceptions.runTimeExceptions.NoCustumerException;
 import com.delivery.api.service.CustomerService;
 import com.delivery.api.usecase.dto.CustomerCreateRequest;
 import com.delivery.api.usecase.dto.CustomerCreateResponse;
@@ -22,7 +23,7 @@ public class CustomerCreateUseCase {
         Customer customer = this.customerService.createCustomer(customerCreateRequest);
         
         if(customer == null){
-            return null;
+            throw new NoCustumerException();
         }
 
         CustomerCreateResponse response = new CustomerCreateResponse(

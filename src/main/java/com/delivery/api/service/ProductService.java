@@ -1,27 +1,28 @@
 package com.delivery.api.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.delivery.api.domain.product.Product;
+import com.delivery.api.exceptions.jpaExceptions.ProductAlreadyExistsException;
 import com.delivery.api.repositories.ProductRepository;
 import com.delivery.api.usecase.dto.ProductCreateRequest;
 
 @Service
 public class ProductService {
-    
+
     private final ProductRepository productRepository;
 
-    public ProductService(@Autowired ProductRepository productRepository){
+    public ProductService(@Autowired ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
 
-    public Product createProduct(ProductCreateRequest productCreateRequest ){
+    public Product createProduct(ProductCreateRequest productCreateRequest) {
 
-        if(productCreateRequest.name() == null 
-            || productCreateRequest.price() == null 
-            || productCreateRequest.code() == null
-        ){
+        if (productCreateRequest.name() == null
+                || productCreateRequest.price() == null
+                || productCreateRequest.code() == null) {
             return null;
         }
 
@@ -30,30 +31,31 @@ public class ProductService {
         product.setPrice(productCreateRequest.price());
         product.setCode(productCreateRequest.code());
 
-        if(productCreateRequest.stockQuantity() == null || productCreateRequest.stockQuantity() < 0){
+        if (productCreateRequest.stockQuantity() == null || productCreateRequest.stockQuantity() < 0) {
             product.setStockQuantity(0);
         } else {
             product.setStockQuantity(productCreateRequest.stockQuantity());
         }
-        
 
-        product = this.productRepository.save(product);
-
+        try {
+            product = this.productRepository.save(product);
+        } catch (DataIntegrityViolationException e) {
+            throw new ProductAlreadyExistsException();
+        }
         return product;
 
     }
 
-    public Product getByCode(String code){
+    public Product getByCode(String code) {
         Product product = this.productRepository.findByCode(code).orElseThrow(
-            RuntimeException::new
-        ); 
+                RuntimeException::new);
         return product;
     }
 
-    public Product decreaseQuantity(Product product, Integer quantity){
-        
+    public Product decreaseQuantity(Product product, Integer quantity) {
+
         Integer stock = product.getStockQuantity();
-        if(stock < quantity){
+        if (stock < quantity) {
             throw new RuntimeException("Out of stock");
         }
 

@@ -19,6 +19,8 @@ import com.delivery.api.usecase.dto.OrderGetByCustomerIdRequest;
 import com.delivery.api.usecase.dto.OrderGetByIdRequest;
 import com.delivery.api.usecase.dto.OrderGetByIdResponse;
 
+import jakarta.validation.Valid;
+
 
 @RestController
 @RequestMapping(value = "/order")
@@ -39,20 +41,20 @@ public class OrderController {
     }
 
     @PostMapping("/create-order")
-    public ResponseEntity<OrderCreateResponse> postMethodName(@RequestBody OrderCreateRequest orderCreateRequest) {
+    public ResponseEntity<OrderCreateResponse> postMethodName(@Valid @RequestBody OrderCreateRequest orderCreateRequest) {
 
         OrderCreateResponse response = this.orderCreateUseCase.execute(orderCreateRequest);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/get-order")
-    public ResponseEntity<OrderGetByIdResponse> getOrderById(@RequestBody OrderGetByIdRequest orderGetByIdRequest) {
+    public ResponseEntity<OrderGetByIdResponse> getOrderById(@Valid @RequestBody OrderGetByIdRequest orderGetByIdRequest) {
         OrderGetByIdResponse response = this.orderSearchByIdUseCase.execute(orderGetByIdRequest);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/get-order-customer")
-    public ResponseEntity<List<OrderGetByIdResponse>> getOrderByCustomerId(@RequestBody OrderGetByCustomerIdRequest orderGetByCustomerIdRequest) {
+    public ResponseEntity<List<OrderGetByIdResponse>> getOrderByCustomerId(@Valid @RequestBody OrderGetByCustomerIdRequest orderGetByCustomerIdRequest) {
         List<OrderGetByIdResponse> response = this.orderGetByCustomerIdUseCase.execute(orderGetByCustomerIdRequest);
         return ResponseEntity.ok(response);
     }

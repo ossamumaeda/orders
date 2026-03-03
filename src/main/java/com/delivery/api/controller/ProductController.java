@@ -1,5 +1,6 @@
 package com.delivery.api.controller;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,6 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.delivery.api.usecase.ProductCreateUseCase;
 import com.delivery.api.usecase.dto.ProductCreateRequest;
 import com.delivery.api.usecase.dto.ProductCreateResponse;
+
+import jakarta.validation.Valid;
+
 
 @RestController
 @RequestMapping(value = "/product")
@@ -22,7 +26,7 @@ public class ProductController {
     }
 
     @PostMapping("/create-product")
-    public ResponseEntity<ProductCreateResponse> postMethodName(@RequestBody ProductCreateRequest productCreateRequest) {
+    public ResponseEntity<ProductCreateResponse> createProduct(@Valid @RequestBody ProductCreateRequest productCreateRequest) {
         
         ProductCreateResponse response = this.productCreateUseCase.execute(productCreateRequest);
         
