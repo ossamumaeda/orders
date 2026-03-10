@@ -1,6 +1,5 @@
 package com.delivery.api.services;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -13,8 +12,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.delivery.api.domain.product.Product;
 import com.delivery.api.exceptions.jpaExceptions.ProductAlreadyExistsException;
 import com.delivery.api.repositories.ProductRepository;
@@ -31,7 +28,7 @@ public class ProductServiceTest {
 
     @BeforeEach
     void setup() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
