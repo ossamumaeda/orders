@@ -10,6 +10,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.client.RestClient;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.delivery.api.usecase.dto.ProductCreateRequest;
 
@@ -30,22 +32,22 @@ public class ProductIT {
     private RestClient.Builder restClientBuilder;
 
     @Test
-    void whenProductIsCreatedSuccesfully() {
+    void whenProductIsCreatedSuccesfully() throws Exception {
 
-        ProductCreateRequest input = new ProductCreateRequest("Teste", 13L, 10, "ABC");
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        RestClient restClient = restClientBuilder.baseUrl("http://localhost:" + port + "/").build();
-        String body = restClient.post()
-                .uri("product/create-product")
-                .retrieve()
-                .body(String.class);
-
-        assertThat(body).isEqualTo("expected");
-        // Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
-        // Assertions.assertEquals(sorted, response.getBody());
+        // ProductCreateRequest input = new ProductCreateRequest("Teste", 13L, 10, "ABC");
+        String json = """
+        {
+            "name": "Teste",
+            "price": 13,
+            "code": "ABC123545",
+            "stockQuantity":10
+        }
+        """;
+        
+        mockMvc.perform(post("/product/create-product")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json))
+                .andExpect(status().is(200));
 
     }
 
