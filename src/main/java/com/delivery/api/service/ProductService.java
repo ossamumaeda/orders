@@ -19,7 +19,6 @@ public class ProductService {
     }
 
     public Product createProduct(ProductCreateRequest productCreateRequest) {
-
         if (productCreateRequest.name() == null
                 || productCreateRequest.price() == null
                 || productCreateRequest.code() == null) {

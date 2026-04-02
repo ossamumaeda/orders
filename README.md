@@ -76,7 +76,7 @@ Required Features (learning-driven)
 . Unit test:
 . Services
 . Domain rules
-. Integration test:
+. Integration test
 . Repositories
 . Critical flows
 

@@ -1,5 +1,7 @@
 package com.delivery.api;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -7,7 +9,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 class ApiApplicationTests {
 
 	@Test
-	void contextLoads() {
-	}
+	@DisplayName("2 + 3 = 5")
+    void deveSomarDoisNumeros() {
+        int resultado = 2 + 3;
+
+        assertEquals(5, resultado);
+    }
 
 }
