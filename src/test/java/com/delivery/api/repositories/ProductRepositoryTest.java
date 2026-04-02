@@ -4,7 +4,7 @@
  */
 
 package com.delivery.api.repositories;
- 
+
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -30,28 +30,30 @@ public class ProductRepositoryTest {
     @Autowired
     EntityManager entityManager;
 
-    @Autowired 
+    @Autowired
     ProductRepository productRepository;
 
     @Test
     @DisplayName("Should get product successfully")
-    void findProductByCode(){
+    void findProductByCode() {
         String code = "BNN";
-        ProductCreateRequest p = new ProductCreateRequest("Banana",10L,50,"BNN");
+        ProductCreateRequest p = new ProductCreateRequest("Banana", 10L, 50, "BNN");
         this.createProduct(p);
 
-        Optional<Product> result =  this.productRepository.findByCode(code);
-        assertThat(result.isPresent()).isTrue();
-    
+        Optional<Product> result = this.productRepository.findByCode(code);
+        assertThat(result).isPresent();
+        assertThat(result.get().getName()).isEqualTo("Banana");
+        assertThat(result.get().getCode()).isEqualTo("BNN");
+
     }
 
-    private Product createProduct(ProductCreateRequest productCreateRequest){
+    private Product createProduct(ProductCreateRequest productCreateRequest) {
         Product newProduct = new Product();
         newProduct.setCode(productCreateRequest.code());
         newProduct.setName(productCreateRequest.name());
         newProduct.setPrice(productCreateRequest.price());
         newProduct.setStockQuantity(productCreateRequest.stockQuantity());
-        
+
         this.entityManager.persist(newProduct);
 
         return newProduct;

@@ -34,7 +34,7 @@ import org.junit.jupiter.api.TestInstance;
 @AutoConfigureMockMvc
 @Testcontainers
 @Transactional // rollback after each test (clean DB automatically)
-@ActiveProfiles("test")
+@ActiveProfiles("testintegration")
 @Import(TestConfig.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ProductDockerIT {
