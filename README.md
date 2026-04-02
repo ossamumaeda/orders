@@ -1,87 +1,113 @@
-Required Features (learning-driven)
-🔹 Phase 1 — Core CRUD (but correctly)
+# API de Delivery
 
-. Create customer - OK
+Uma API REST desenvolvida em Java com Spring Boot para gerenciar pedidos de delivery, incluindo clientes, produtos, pedidos e itens de pedido.
 
-. Create product - OK
+## Tecnologias Utilizadas
 
-. Create order with items - OK
+- **Java 17** (ou versão compatível)
+- **Spring Boot** - Framework para desenvolvimento de aplicações Java
+- **Spring Data JPA** - Para persistência de dados
+- **H2 Database** - Banco de dados em memória para desenvolvimento/testes
+- **Flyway** - Para migrações de banco de dados
+- **Maven** - Gerenciamento de dependências e build
+- **JUnit 5** e **Mockito** - Para testes unitários
+- **Docker Compose** - Para ambiente de desenvolvimento com banco de dados
 
-. Validate stock - OK
+## Funcionalidades
 
-. Decrease inventory - OK
+- Gerenciamento de clientes (Customer)
+- Cadastro e gerenciamento de produtos (Product)
+- Criação e processamento de pedidos (Order)
+- Itens de pedido (OrderItem)
+- Pagamentos (Payment)
+- Validações de negócio (estoque, produtos duplicados, etc.)
+- Tratamento de exceções personalizadas
 
-👉 Learn:
+## Estrutura do Projeto
 
-. DTO mapping
+```
+src/
+├── main/
+│   ├── java/com/delivery/api/
+│   │   ├── config/          # Configurações do Spring
+│   │   ├── controller/      # Controladores REST
+│   │   ├── domain/          # Entidades de domínio
+│   │   ├── exceptions/      # Exceções personalizadas
+│   │   ├── repositories/    # Repositórios JPA
+│   │   ├── service/         # Serviços de negócio
+│   │   └── usecase/         # Casos de uso (orquestração)
+│   └── resources/
+│       ├── application.properties  # Configurações da aplicação
+│       └── db/migration/           # Scripts de migração Flyway
+└── test/
+    ├── java/com/delivery/api/      # Testes unitários
+    └── resources/                  # Configurações de teste
+```
 
-. Transactions
- 
-. Collections & identity
+## Como Executar
 
-🔹 Phase 2 — Business rules
+### Pré-requisitos
 
-. Prevent duplicate products in same order - OK
- 
-. Prevent order without items - OK
+- Java 17 ou superior
+- Maven 3.6+
+- Docker (opcional, para banco de dados)
 
-. Prevent negative stock - OK
+### Configuração
 
-. Order status lifecycle
+1. **Configure as variáveis de ambiente:**
+   - Copie o arquivo `.env.example` para `.env`:
+     ```bash
+     cp .env.example .env
+     ```
+   - Edite `.env` com suas credenciais reais do banco de dados PostgreSQL.
 
-👉 Learn:
+2. **Arquivo de propriedades:**
+   - O `application.properties` usa variáveis de ambiente para segurança.
+   - Não commite o `application.properties` real (ele está no `.gitignore`).
 
-. equals/hashCode
+### Passos
 
-. Set behavior
+1. **Clone o repositório:**
+   ```bash
+   git clone https://github.com/seu-usuario/api-delivery.git
+   cd api-delivery
+   ```
 
-. Domain logic placement
+2. **Instale as dependências:**
+   ```bash
+   mvn clean install
+   ```
 
-🔹 Phase 3 — Performance traps (intentional pain)
+3. **Execute a aplicação:**
+   ```bash
+   mvn spring-boot:run
+   ```
+   A API estará disponível em `http://localhost:7085`.
 
-. List orders with customer + items - OK
+4. **Execute os testes:**
+   ```bash
+   mvn test
+   ```
 
-. List orders by customers - OK
+## Endpoints Principais
 
-. Observe N+1 problem - OK
+- `GET /customers` - Listar clientes
+- `POST /customers` - Criar cliente
+- `GET /products` - Listar produtos
+- `POST /products` - Criar produto
+- `POST /orders` - Criar pedido
+- `GET /orders` - Listar pedidos
 
-. Fix using:
+*(Consulte a documentação Swagger em `/swagger-ui.html` para endpoints completos)*
 
-. fetch join
- 
-. entity graphs
- 
-. projections
+## Testes
 
-👉 Learn:
+O projeto inclui testes unitários para serviços e casos de uso. Para rodar:
 
-. Lazy loading
-. JPQL
-. ORM performance
+```bash
+mvn test
+```
 
-🔹 Phase 4 — Error handling & robustness
+## Licença
 
-. Global exception handling - OK
-. Meaningful HTTP errors - OK
-. Validation errors - ok
-
-👉 Learn:
-
-. ControllerAdvice
-
-. API design
-
-🔹 Phase 5 — Testing (non-negotiable)
-
-. Unit test:
-. Services
-. Domain rules
-. Integration test
-. Repositories
-. Critical flows
-
-👉 Learn:
-
-. Mockito
-. Test boundaries
-. What not to test
+Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.
