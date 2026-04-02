@@ -5,14 +5,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import javax.management.RuntimeErrorException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.delivery.api.domain.customer.Customer;
 import com.delivery.api.domain.order.Order;
-import com.delivery.api.exceptions.runTimeExceptions.NoCustumerException;
 import com.delivery.api.repositories.OrderRepository;
 
 @Service

@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.delivery.api.domain.customer.Customer;
-import com.delivery.api.exceptions.runTimeExceptions.NoCustumerException;
 import com.delivery.api.repositories.CustomerRepository;
 import com.delivery.api.usecase.dto.CustomerCreateRequest;
 
